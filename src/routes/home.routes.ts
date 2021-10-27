@@ -1,8 +1,8 @@
 import express from 'express'
 
-import { homeController } from '../controllers/home.controllers.js'
+import { startEndpoint } from '../controllers/home.controllers'
 
 export const router = express.Router()
 
 // Routes for the startpage of the API
-router.get('/', homeController.startEndpoint, responseHandler)
+router.get('/', startEndpoint)

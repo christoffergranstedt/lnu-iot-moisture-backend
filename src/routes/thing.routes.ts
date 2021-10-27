@@ -1,13 +1,13 @@
 import express from 'express'
 
-import { thingsController } from '../controllers/thing.controllers.js'
-import { validateInput } from '../middlewares/validateInput.js'
-import { verifyAccessToken } from '../middlewares/verifyToken.js'
+import { getThings, getThing, createThing, updateThing, deleteThing } from '../controllers/thing.controllers'
+import { validate, validateThing } from '../middlewares/validateInput'
+import { verifyAccessToken } from '../middlewares/verifyToken'
 
 export const router = express.Router()
 
-router.get('/', verifyAccessToken, thingsController.getThings, responseHandler)
-router.get('/:thingId', verifyAccessToken, thingsController.getThing, responseHandler)
-router.post('/', verifyAccessToken, validateInput.thing, validateInput.validate, thingsController.createThing, responseHandler)
-router.put('/:thingId', verifyAccessToken, validateInput.thing, validateInput.validate, thingsController.updateThing, responseHandler)
-router.delete('/:thingId', verifyAccessToken, thingsController.deleteThing, responseHandler)
+router.get('/', verifyAccessToken, getThings)
+router.get('/:thingId', verifyAccessToken, getThing)
+router.post('/', verifyAccessToken, validateThing, validate, createThing)
+router.put('/:thingId', verifyAccessToken, validateThing, validate, updateThing)
+router.delete('/:thingId', verifyAccessToken, deleteThing)

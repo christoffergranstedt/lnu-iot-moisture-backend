@@ -1,8 +1,8 @@
 import express from 'express'
 
-import { getActions, getAction, createAction, invokeAction, updateAction, deleteAction } from '../controllers/action.controllers.js'
-import { validate, validateAction } from '../middlewares/validateInput.js'
-import { verifyAccessToken } from '../middlewares/verifyToken.js'
+import { getActions, getAction, createAction, invokeAction, updateAction, deleteAction } from '../controllers/action.controllers'
+import { validate, validateAction } from '../middlewares/validateInput'
+import { verifyAccessToken } from '../middlewares/verifyToken'
 
 export const router = express.Router({ mergeParams: true })
 

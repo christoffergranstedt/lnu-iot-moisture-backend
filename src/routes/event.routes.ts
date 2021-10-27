@@ -1,15 +1,15 @@
 import express from 'express'
 
-import { eventsController } from '../controllers/event.controller.js'
-import { validateInput } from '../middlewares/validateInput.js'
-import { verifyAccessToken } from '../middlewares/verifyToken.js'
+import { getEvents, getEvent, subscribeEvent, unSubscribeEvent, createEvent, updateEvent, deleteEvent } from '../controllers/event.controller'
+import { validate, validateEvent } from '../middlewares/validateInput'
+import { verifyAccessToken } from '../middlewares/verifyToken'
 
 export const router = express.Router({ mergeParams: true })
 
-router.get('/', verifyAccessToken, eventsController.getEvents, responseHandler)
-router.get('/:eventName', verifyAccessToken, eventsController.getEvent, responseHandler)
-router.post('/:eventName/subscribe', verifyAccessToken, eventsController.subscribeEvent, responseHandler)
-router.delete('/:eventName/unsubscribe', verifyAccessToken, eventsController.unSubscribeEvent, responseHandler)
-router.post('/', verifyAccessToken, validateInput.event, validateInput.validate, eventsController.createEvent, responseHandler)
-router.put('/:eventName', verifyAccessToken, validateInput.event, validateInput.validate, eventsController.updateEvent, responseHandler)
-router.delete('/:eventName', verifyAccessToken, eventsController.deleteEvent, responseHandler)
+router.get('/', verifyAccessToken, getEvents)
+router.get('/:eventName', verifyAccessToken, getEvent)
+router.post('/:eventName/subscribe', verifyAccessToken, subscribeEvent)
+router.delete('/:eventName/unsubscribe', verifyAccessToken, unSubscribeEvent)
+router.post('/', verifyAccessToken, validateEvent, validate, createEvent)
+router.put('/:eventName', verifyAccessToken, validateEvent, validate, updateEvent)
+router.delete('/:eventName', verifyAccessToken, deleteEvent)
