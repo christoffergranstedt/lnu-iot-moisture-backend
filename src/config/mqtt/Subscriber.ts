@@ -9,7 +9,7 @@ export abstract class Subscriber {
 		this.client = client
 	}
 
-	public listen () {
+	public listen (): void {
 		console.log(`Subscribing to ${this.topic}`)
 		this.client.subscribe(this.topic)
 	}

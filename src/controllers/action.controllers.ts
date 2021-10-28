@@ -1,7 +1,10 @@
-import { ACTIONS } from '../actions/actions.js'
-import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError.js'
-import { getCurrentMoisturePublisher } from '../config/mqtt/mqtt.js'
-import { PUBLISHER_TOPIC } from '../config/mqtt/PublisherTopic.js'
+import { Request, Response, NextFunction  } from 'express'
+
+import { Actions } from '../constants/Actions'
+import { Publisher } from '../config/mqtt/Publisher'
+import { GetCurrentMoisturePublisher } from '../actions/publishers/GetCurrentMoisturePublisher'
+import { AppGlobal } from '../constants/AppGlobal'
+import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError'
 
 /**
  * To get info about all actions for a thing
@@ -10,8 +13,9 @@ import { PUBLISHER_TOPIC } from '../config/mqtt/PublisherTopic.js'
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getActions = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getActions = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -21,8 +25,9 @@ export const getActions = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const getAction = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ export const getAction = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -32,8 +37,9 @@ export const getActions = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const createAction = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ export const createAction = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -43,11 +49,13 @@ export const getActions = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const invokeAction = async (req, res, next) => {
+ export const invokeAction = async (req: Request, res: Response, next: NextFunction) => {
 	const { actionName, thingId } = req.params
 
-	if (actionName === ACTIONS.GET_CURRENT_MOISTURE_VALUE) {
-		getCurrentMoisturePublisher.publish(PUBLISHER_TOPIC.GET_CURRENT_MOISTURE_VALUE(thingId), '')
+	const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
+
+	if (actionName === Actions.GetCurrentMoistureValue) {
+		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '')
 	}
 
 	res.locals.data = {
@@ -64,8 +72,9 @@ export const getActions = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const updateAction = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ export const updateAction = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -75,6 +84,7 @@ export const getActions = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const deleteAction = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ export const deleteAction = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }

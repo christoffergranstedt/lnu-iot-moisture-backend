@@ -17,7 +17,7 @@ export class NewMoistureValueSubscriber extends Subscriber {
 		this.property = PROPERTY.Moisture
 	}
 
-	async onMessage (message: string, thingId: string) {
+	async onMessage (message: string, thingId: string): Promise<void> {
 		const thing = await Thing.getThing(thingId)
 		if (thing.length === 0) throw new NoResourceIdError(thingId)
 		const valueInProcent = parseFloat(message) * 100

@@ -30,9 +30,9 @@ export class Mongoose {
 	 * To close the connection to mongoose
 	 *
 	 */
-	public close (): void {
+	public async close (): Promise<void> {
 		try {
-			mongoose.connection.close(() => {
+			await mongoose.connection.close(() => {
 				console.log('Mongoose connection is disconnected due to application termination.')
 			})
 		} catch (error) {
@@ -44,7 +44,7 @@ export class Mongoose {
 	 * To populate the database if it empty
 	 *
 	 */
-	private async prePopulateDatabase () {
+	private async prePopulateDatabase (): Promise<void> {
 		const { ADMIN_USERNAME, ADMIN_PASSWORD, GUEST_USERNAME, GUEST_PASSWORD, TELEGRAM_ADMIN_ID, NODE_ENV } = process.env
 		if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !GUEST_USERNAME || !GUEST_PASSWORD || !TELEGRAM_ADMIN_ID || !NODE_ENV) throw new Error('Database environment variables is incorrect and missing') 
 

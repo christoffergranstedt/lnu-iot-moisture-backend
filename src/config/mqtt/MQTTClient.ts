@@ -1,7 +1,6 @@
 import mqtt, { MqttClient } from 'mqtt'
 import { NewMoistureValueSubscriber } from '../../events/subscribers/NewMoistureValueSubscriber.js'
 import { CurrentMoistureValueSubscriber } from '../../events/subscribers/CurrentMoistureValueSubscriber.js'
-import { GetCurrentMoisturePublisher } from '../../actions/publishers/GetCurrentMoisturePublisher.js'
 import { SubscriberTopic } from 'src/constants/SubscriberTopic.js'
 
 class MQTTClient {
@@ -29,7 +28,6 @@ class MQTTClient {
 		this.mqttClient.on('connect', () => {
 			console.log('Connected to MQTT Broker')
 			this.initializeListeners()
-			this.initializePublishers()
 		})
 
 		this.mqttClient.on('message', (originalTopic, message) => {
@@ -51,11 +49,7 @@ class MQTTClient {
 		this.currentMoistureValueSubscriber.listen()
 	}
 
-	private initializePublishers (): void {
-		new GetCurrentMoisturePublisher(this.mqttClient)
-	}
-
-	public close () {
+	public close (): void {
 		this.mqttClient.end()
 	}
 }
