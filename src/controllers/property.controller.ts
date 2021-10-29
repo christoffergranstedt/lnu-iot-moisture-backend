@@ -1,5 +1,7 @@
-import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError.js'
-import { Thing } from '../models/Thing.js'
+import { Request, Response, NextFunction  } from 'express'
+
+import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError'
+import { Thing } from '../models/Thing'
 
 /**
  * To get all properties for a thing
@@ -8,8 +10,9 @@ import { Thing } from '../models/Thing.js'
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getProperties = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getProperties = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -19,8 +22,9 @@ export const getProperties = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getProperty = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getProperty = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -30,7 +34,7 @@ export const getProperty = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getPropertyValues = async (req, res, next) => {
+export const getPropertyValues = async (req: Request, res: Response, next: NextFunction) => {
 	const { propertyName, thingId } = req.params
 	const values = await Thing.getPropertyValues(thingId, propertyName)
 	res.locals.data = {
@@ -48,8 +52,9 @@ export const getPropertyValues = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const createProperty = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const createProperty = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -59,8 +64,9 @@ export const createProperty = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const updateProperty = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const updateProperty = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -70,6 +76,7 @@ export const updateProperty = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const deleteProperty = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const deleteProperty = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }

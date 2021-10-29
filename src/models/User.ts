@@ -19,7 +19,7 @@ interface RefreshTokenAuth {
 	refreshToken: string
 }
 
-interface UserOutput {
+export interface UserOutput {
 	id: string
 	username: string
 	permissonLevel?: PermissionLevel.Admin | PermissionLevel.User

@@ -1,8 +1,10 @@
+import { Request, Response, NextFunction  } from 'express'
 import jwt from 'jsonwebtoken'
 import cryptoRandomString from 'crypto-random-string'
-import { User } from '../models/User.js'
-import { UnauthenticatedError } from '../errors/index.js'
-import { notifyUserByTelegram } from '../config/telegram.js'
+
+import { User } from '../models/User'
+import { UnauthenticatedError } from '../errors/index'
+import { notifyUserByTelegram } from '../config/telegram'
 
 /**
  * Authenticate a user by checking if the provided username and password exist in database and returns an access token and a refresh token
@@ -12,11 +14,13 @@ import { notifyUserByTelegram } from '../config/telegram.js'
  * @param {Function} next - Express next middleware function.
  * @returns {object} - Access token and refresh token for user.
  */
-export const authenticateUser = async (req, res, next) => {
+export const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
 	const { username, password } = req.body
 	const user = await User.authenticate({ username, password })
 
 	const { ACCESS_TOKEN_SECRET } = process.env
+	if (!ACCESS_TOKEN_SECRET) throw new Error('ACCESS_TOKEN_SECRET environment variable is not set')
+
 	const payload = {
 		userId: user.id,
 		username: username
@@ -55,7 +59,7 @@ export const authenticateUser = async (req, res, next) => {
  * @param {Function} next - Express next middleware function.
  * @returns {object} - Information about successful register.
  */
- export const registerUser = async (req, res, next) => {
+ export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
 	const { username, password } = req.body
 	await User.build(username, password)
 	res.locals.data = {
@@ -73,12 +77,13 @@ export const authenticateUser = async (req, res, next) => {
  * @param {Function} next - Express next middleware function.
  * @returns {object} - New access token and refresh token for user.
  */
- export const refreshAccessToken = async (req, res, next) => {
+ export const refreshAccessToken = async (req: Request, res: Response, next: NextFunction) => {
 	const { ACCESS_TOKEN_SECRET } = process.env
+	if (!ACCESS_TOKEN_SECRET) throw new Error('ACCESS_TOKEN_SECRET environment variable is not set')
 
 	const authType = req.headers.authorization ? req.headers.authorization.split(' ')[0] : null
 	const refreshToken = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null
-	if (authType !== 'Bearer') return next(new UnauthenticatedError())
+	if (authType !== 'Bearer' || !refreshToken) return next(new UnauthenticatedError())
 
 	const tokenPayload = jwt.verify(refreshToken, ACCESS_TOKEN_SECRET)
 	req.user = {
@@ -127,7 +132,7 @@ export const authenticateUser = async (req, res, next) => {
  * @param {Function} next - Express next middleware function.
  * @returns {object} - Information about successful register.
  */
- export const signoutUser = async (req, res, next) => {
+ export const signoutUser = async (req: Request, res: Response, next: NextFunction) => {
 	if (!req.user) return next()
 	await User.storeRefreshToken({ userId: req.user.id, refreshToken: '' })
 	res.locals.data = {
@@ -145,7 +150,7 @@ export const authenticateUser = async (req, res, next) => {
  * @param {Function} next - Express next middleware function.
  * @returns {object} - Information about successful register.
  */
- export const telegramSetup = async (req, res, next) => {
+ export const telegramSetup = async (req: Request, res: Response, next: NextFunction) => {
 	const telegramId = req.body.message.chat.id
 	const userId = req.body.message.text
 	try {

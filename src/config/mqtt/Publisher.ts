@@ -7,11 +7,11 @@ export class Publisher {
 		this.client = client
 	}
 
-	publish (topic: string, data: never): void {
+	publish (topic: string, data: string): void {
 		this.client.publish(topic, data)
 	}
 
-	public getCurrentMoistureValue (thingId: string): string {
+	public static getCurrentMoistureValue (thingId: string): string {
 		return `things/${thingId}/moisture/get/current`
 	}
 }

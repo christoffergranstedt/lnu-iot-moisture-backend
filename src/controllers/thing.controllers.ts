@@ -1,5 +1,7 @@
-import { Thing } from '../models/Thing.js'
-import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError.js'
+import { Request, Response, NextFunction  } from 'express'
+
+import { Thing } from '../models/Thing'
+import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError'
 
 /**
  * To get all things
@@ -8,7 +10,7 @@ import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplemented
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getThings = async (req, res, next) => {
+export const getThings = async (req: Request, res: Response, next: NextFunction) => {
 	const things = await Thing.getThings(req.user.id)
 	res.locals.data = {
 		message: 'All things fetched',
@@ -25,7 +27,7 @@ export const getThings = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getThing = async (req, res, next) => {
+export const getThing = async (req: Request, res: Response, next: NextFunction) => {
 	const { thingId } = req.params
 	const thing = await Thing.getThing(thingId, req.user.id)
 	res.locals.data = {
@@ -43,8 +45,9 @@ export const getThing = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const createThing = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const createThing = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -54,8 +57,9 @@ export const createThing = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const updateThing = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const updateThing = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }
 
 /**
@@ -65,6 +69,7 @@ export const updateThing = async (req, res, next) => {
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const deleteThing = async (req, res, next) => {
-	EndpointNotImplementedYetError()
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const deleteThing = async (_req: Request, _res: Response, _next: NextFunction) => {
+	throw new EndpointNotImplementedYetError()
 }

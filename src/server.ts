@@ -12,6 +12,8 @@ import { router as routes } from './routes/routes'
 import { apiRateLimiter } from './middlewares/rateLimiter'
 import { Mongoose } from './config/mongoose'
 import { errorHandler } from './middlewares/errorHandler'
+import { mqttClient } from './config/mqtt/MQTTClient'
+import { AppGlobal } from './constants/AppGlobal'
 // import { mqttClient } from './config/mqtt/mqtt.js'
 
 const { PORT } = process.env
@@ -50,6 +52,7 @@ const connectToDbAndServer = async () => {
 	try {
 		await app.listen(PORT, async () => {
 			await new Mongoose().connect()
+			app.set(AppGlobal.MqttClient, mqttClient)
 			// mqttClient.connect() - Disabled for now since I have paused my CloudMQTT Broker
 
 			console.log(`Server running on port ${PORT}`)
