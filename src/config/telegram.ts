@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { UserDoc } from '../models/User'
+import { UserOutput } from '../models/User'
 
 /**
  * To notify a user with an event
@@ -8,7 +8,7 @@ import { UserDoc } from '../models/User'
  * @param {object} user - A user that should hold a telegram id.
  * @param {string} event - A string with an event.
  */
-export const notifyUserByTelegram = async (user: UserDoc, event: string): Promise<void> => {
+export const notifyUserByTelegram = async (user: UserOutput, event: string): Promise<void> => {
 	const { TELEGRAM_BOT } = process.env
 	if (!user.telegramId) throw new Error('User has not set up telegram ID')
 	await axios({

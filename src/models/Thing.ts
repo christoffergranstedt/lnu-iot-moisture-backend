@@ -16,7 +16,7 @@ interface Property {
 	unit: string
 	minimum: number
 	maximum: number
-	values: { value: string, date: Date }[]
+	values: { value: number, date: Date }[]
 	forms: Form[]
 }
 
@@ -40,7 +40,7 @@ interface EventReturn {
 }
 
 interface PropertyReturn {
-	value: string
+	value: number
 	date: Date
 }
 
@@ -104,12 +104,12 @@ interface ThingDoc extends mongoose.Document {
 interface ThingModel extends mongoose.Model<ThingDoc> {
 	build(thingInput: ThingInput): Promise<ThingOutput>
 	getThings(userId: string): Promise<ThingOutput[]>
-	getThing(thingId: string, userId: string): Promise<ThingOutput>
-	addPropertyValue(thingId: string, property: string, value: string): Promise<void>
+	getThing(thingId: string, userId?: string): Promise<ThingOutput>
+	addPropertyValue(thingId: string, property: string, value: number): Promise<void>
 	getPropertyValues(thingId: string, property: string): Promise<PropertyReturn[]>
 	subscribeToEvent(userId: string, thingId: string, eventName: string): Promise<void>
 	unSubscribeToEvent(userId: string, thingId: string, eventName: string): Promise<void>
-	getEventSubscribers(thingId: string, eventName: string): Promise<UserOutput>
+	getEventSubscribers(thingId: string, eventName: string): Promise<UserOutput[]>
 	getAlertValue(thingId: string, eventName: string): Promise<number>	
 }
 
@@ -251,7 +251,7 @@ thingSchema.statics.getThings = async (userId: string): Promise<ThingOutput[]> =
  * @param {string} userId - Userid that will be used to set if user is subscribing to an event or not
  * @param {string} thingId - Thing id for a specific thing
  */
-thingSchema.statics.getThing = async (thingId: string, userId: string): Promise<ThingOutput> => {
+thingSchema.statics.getThing = async (thingId: string, userId?: string): Promise<ThingOutput> => {
 	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
@@ -259,7 +259,7 @@ thingSchema.statics.getThing = async (thingId: string, userId: string): Promise<
 		return {
 			title: event.title,
 			alertValue: event.alertValue,
-			isSubscribing: event.subscribers.includes(userId.toString()),
+			isSubscribing: userId ? event.subscribers.includes(userId.toString()) : false,
 			forms: event.forms
 		}
 	})
@@ -288,7 +288,7 @@ thingSchema.statics.getThing = async (thingId: string, userId: string): Promise<
  * @param {string} property - The property
  * @param {string} value - The value
  */
-thingSchema.statics.addPropertyValue = async (thingId: string, property: string, value): Promise<void> => {
+thingSchema.statics.addPropertyValue = async (thingId: string, property: string, value: number): Promise<void> => {
 	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
