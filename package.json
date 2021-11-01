@@ -5,8 +5,9 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "env NODE_ENV=production node src/server.js",
-    "dev": "env NODE_ENV=development ts-node-dev src/server.ts"
+    "start": "node dist/server.js",
+    "dev": "env NODE_ENV=development ts-node-dev src/server.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
