@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError.js'
+import { CustomError } from './CustomError'
 
 /**
  * A class for genereal database connection or query errors

@@ -1,7 +1,7 @@
 import mqtt, { MqttClient } from 'mqtt'
-import { NewMoistureValueSubscriber } from '../../events/subscribers/NewMoistureValueSubscriber.js'
-import { CurrentMoistureValueSubscriber } from '../../events/subscribers/CurrentMoistureValueSubscriber.js'
-import { SubscriberTopic } from 'src/constants/SubscriberTopic.js'
+import { NewMoistureValueSubscriber } from '../../events/subscribers/NewMoistureValueSubscriber'
+import { CurrentMoistureValueSubscriber } from '../../events/subscribers/CurrentMoistureValueSubscriber'
+import { SubscriberTopic } from '../../constants/SubscriberTopic'
 
 class MQTTClient {
 	private mqttClient: MqttClient

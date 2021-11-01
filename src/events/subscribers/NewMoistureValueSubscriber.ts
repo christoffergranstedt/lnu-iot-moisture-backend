@@ -31,7 +31,8 @@ export class NewMoistureValueSubscriber extends Subscriber {
 			const users = await Thing.getEventSubscribers(thingId, Events.LowMoisture)
 			const event = `Low moisture level in thing, ${thingId}. Moisture value is : ${valueInProcent.toFixed(2)}%`
 			for (let i = 0; i < users.length; i++) {
-				await notifyUserByTelegram(users[i], event)
+				const telegramId = (users[i].telegramId) as string
+				if (users[i].telegramId) await notifyUserByTelegram(telegramId, event)
 			}
 		}
 
@@ -39,7 +40,8 @@ export class NewMoistureValueSubscriber extends Subscriber {
 			const users = await Thing.getEventSubscribers(thingId, Events.HighMoisture)
 			const event = `High moisture level in thing, ${thingId}. Moisture value is : ${valueInProcent.toFixed(2)}%`
 			for (let i = 0; i < users.length; i++) {
-				await notifyUserByTelegram(users[i], event)
+				const telegramId = (users[i].telegramId) as string
+				if (users[i].telegramId) await notifyUserByTelegram(telegramId, event)
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-import { UnauthenticatedError, UsernameIsTakenError, WrongCredentialsError, WrongRefreshTokenError } from '../errors/index.js'
+import { UnauthenticatedError, UsernameIsTakenError, WrongCredentialsError, WrongRefreshTokenError } from '../errors/index'
 import { PermissionLevel } from '../constants/PermissionLevel'
 
 
@@ -10,7 +10,7 @@ import { PermissionLevel } from '../constants/PermissionLevel'
 interface UserInput {
   username: string
   password: string
-	permissionLevel?: PermissionLevel.Admin | PermissionLevel.User
+	permissionLevel?: string
 	telegramId?: string
 }
 
@@ -22,7 +22,7 @@ interface RefreshTokenAuth {
 export interface UserOutput {
 	id: string
 	username: string
-	permissonLevel?: PermissionLevel.Admin | PermissionLevel.User
+	permissonLevel?: string
 	telegramId?: string
 }
 
@@ -31,7 +31,7 @@ export interface UserOutput {
 interface UserDoc extends mongoose.Document {
   username: string
   password: string
-	permissonLevel: PermissionLevel.Admin | PermissionLevel.User
+	permissonLevel: string
 	refreshToken: string
 	telegramId: string
 }
@@ -39,7 +39,7 @@ interface UserDoc extends mongoose.Document {
 // An interface that describes the properties
 // that a User Model has
 interface UserModel extends mongoose.Model<UserDoc> {
-  build(userInput: UserInput): Promise<UserOutput>
+  build(username: string, password: string): Promise<UserOutput>
 	adminBuild(userInput: UserInput) : Promise<UserOutput>
 	authenticate(userInput: UserInput) : Promise<UserOutput>
 	authenticateRefreshToken(refreshTokenAttributes: RefreshTokenAuth) : Promise<UserOutput>
@@ -63,9 +63,9 @@ const userSchema = new mongoose.Schema(
 			unique: false
 		},
 		permissonLevel: {
-			type: PermissionLevel,
+			type: String,
 			required: true,
-			default: PermissionLevel.User
+			default: PermissionLevel.Admin
 		},
 		refreshToken: {
 			type: String,
@@ -83,11 +83,11 @@ const userSchema = new mongoose.Schema(
  *
  * @param {string} userInput - User attributes
  */
- userSchema.statics.build = async (userInput: UserInput) : Promise<UserOutput> => {
-	const userExist = await User.exists({ username: userInput.username })
+ userSchema.statics.build = async (username: string, password: string) : Promise<UserOutput> => {
+	const userExist = await User.exists({ username: username })
 	if (userExist) throw new UsernameIsTakenError()
-	userInput.password = await bcrypt.hash(userInput.password, 10)
-	const user = new User(userInput)
+	password = await bcrypt.hash(password, 10)
+	const user = new User({ username, password })
 	user.save()
 
 	return {

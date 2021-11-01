@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError.js'
+import { CustomError } from './CustomError'
 
 /**
  * When the provided resources is not found

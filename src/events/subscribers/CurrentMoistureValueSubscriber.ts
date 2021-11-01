@@ -1,8 +1,8 @@
 import { MqttClient } from 'mqtt'
 
-import { Subscriber } from '../../config/mqtt/Subscriber.js'
-import { Thing } from '../../models/Thing.js'
-import { notifyUserByTelegram } from '../../config/telegram.js'
+import { Subscriber } from '../../config/mqtt/Subscriber'
+import { Thing } from '../../models/Thing'
+import { notifyUserByTelegram } from '../../config/telegram'
 import { Events } from '../../constants/Events'
 import { SubscriberTopic } from '../../constants/SubscriberTopic'
 
@@ -17,7 +17,8 @@ export class CurrentMoistureValueSubscriber extends Subscriber {
 		const users = await Thing.getEventSubscribers(thingId, Events.CurrentMoistureValue)
 		const event = `Current moisture level in thing, ${thingId}, is: ${valueInProcent.toFixed(2)}%`
 		for (let i = 0; i < users.length; i++) {
-			await notifyUserByTelegram(users[i], event)
+			const telegramId = (users[i].telegramId) as string
+			if (users[i].telegramId) await notifyUserByTelegram(telegramId, event)
 		}
 	}
 }

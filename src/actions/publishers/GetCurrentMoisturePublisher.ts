@@ -1,4 +1,4 @@
-import { Publisher } from '../../config/mqtt/Publisher.js'
+import { Publisher } from '../../config/mqtt/Publisher'
 
 export class GetCurrentMoisturePublisher extends Publisher {
 

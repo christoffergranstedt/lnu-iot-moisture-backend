@@ -37,12 +37,9 @@ export const getProperty = async (_req: Request, _res: Response, _next: NextFunc
 export const getPropertyValues = async (req: Request, res: Response, next: NextFunction) => {
 	const { propertyName, thingId } = req.params
 	const values = await Thing.getPropertyValues(thingId, propertyName)
-	res.locals.data = {
-		message: 'Values for the property, there may be more values, see pagination',
-		values: values
-	}
-	res.status(200)
-	return next()
+
+	res.status(200).json({message: 'Values for the property, there may be more values, see pagination',	values: values})
+	next()
 }
 
 /**

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
-import { NoResourceIdError } from '../errors/NoResourceIdError'
-import { NotUniqueError } from '../errors/NotUniqueError.js'
-import { User, UserOutput } from './User.js'
+import { NoResourceIdError, NotUniqueError } from '../errors'
+import { User, UserOutput } from './User'
 
 interface Form {
 	op: []
