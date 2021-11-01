@@ -2,12 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
-  "type": "module",
+  "main": "src/server.ts",
   "scripts": {
     "start": "node dist/server.js",
     "dev": "env NODE_ENV=development ts-node-dev src/server.ts",
-    "build": "tsc"
+    "build": "tsc --project tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -25,9 +24,10 @@
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
+    "morgan": "^1.10.0",
     "mqtt": "^4.2.8",
     "node-cache": "^5.1.2",
-    "morgan": "^1.10.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
