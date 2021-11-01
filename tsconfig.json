@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["dom", "es6", "es2020", "esnext.asynciterable", "dom.iterable"],
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist/",
     "sourceMap": true,
-    "outDir": "./dist",
+    "lib": ["dom", "ESNext", "esnext.asynciterable", "dom.iterable"],
     "moduleResolution": "node",
     "declaration": false,
     "composite": false,
