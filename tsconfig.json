@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
     "lib": ["dom", "es6", "es2020", "esnext.asynciterable", "dom.iterable"],
     "sourceMap": true,
     "outDir": "./dist",
