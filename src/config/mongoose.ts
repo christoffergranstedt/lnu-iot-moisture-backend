@@ -58,7 +58,7 @@ export class Mongoose {
 
 		const guestExist = await User.exists({ username: GUEST_USERNAME })
 		if (!guestExist) {
-			await User.build({ username: GUEST_USERNAME, password: GUEST_PASSWORD })
+			await User.build(GUEST_USERNAME, GUEST_PASSWORD)
 		}
 
 		const thingExist = await Thing.exists({ id: myMoistureThing.id })

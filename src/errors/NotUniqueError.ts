@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError.js'
+import { CustomError } from './CustomError'
 
 /**
  * When a entry of same already exist in database

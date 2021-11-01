@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction  } from 'express'
 import jwt from 'jsonwebtoken'
-import cryptoRandomString from 'crypto-random-string'
+import crypto from 'crypto'
 
 import { User } from '../models/User'
 import { UnauthenticatedError } from '../errors/index'
@@ -33,7 +33,7 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 
 	const accessToken = await jwt.sign(payload, ACCESS_TOKEN_SECRET, optionsAccessToken)
 
-	const refreshToken = cryptoRandomString({ length: 64, type: 'base64' })
+	const refreshToken = crypto.randomBytes(64).toString('hex')
 
 	await User.storeRefreshToken({ userId: user.id, refreshToken })
 
@@ -101,7 +101,7 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 
 	const accessToken = await jwt.sign(payload, ACCESS_TOKEN_SECRET, optionsAccessToken)
 
-	const newRefreshToken = cryptoRandomString({ length: 64, type: 'base64' })
+	const newRefreshToken = crypto.randomBytes(64).toString('hex')
 
 	User.storeRefreshToken({ userId: user.id, refreshToken: newRefreshToken })
 

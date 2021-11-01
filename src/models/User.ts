@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-import { UnauthenticatedError, UsernameIsTakenError, WrongCredentialsError, WrongRefreshTokenError } from '../errors/index.js'
+import { UnauthenticatedError, UsernameIsTakenError, WrongCredentialsError, WrongRefreshTokenError } from '../errors/index'
 import { PermissionLevel } from '../constants/PermissionLevel'
 
 
@@ -10,7 +10,7 @@ import { PermissionLevel } from '../constants/PermissionLevel'
 interface UserInput {
   username: string
   password: string
-	permissionLevel?: PermissionLevel.Admin | PermissionLevel.User
+	permissionLevel?: string
 	telegramId?: string
 }
 
@@ -22,7 +22,7 @@ interface RefreshTokenAuth {
 export interface UserOutput {
 	id: string
 	username: string
-	permissonLevel?: PermissionLevel.Admin | PermissionLevel.User
+	permissonLevel?: string
 	telegramId?: string
 }
 
@@ -31,7 +31,7 @@ export interface UserOutput {
 interface UserDoc extends mongoose.Document {
   username: string
   password: string
-	permissonLevel: PermissionLevel.Admin | PermissionLevel.User
+	permissonLevel: string
 	refreshToken: string
 	telegramId: string
 }
@@ -63,9 +63,9 @@ const userSchema = new mongoose.Schema(
 			unique: false
 		},
 		permissonLevel: {
-			type: PermissionLevel,
+			type: String,
 			required: true,
-			default: PermissionLevel.User
+			default: PermissionLevel.Admin
 		},
 		refreshToken: {
 			type: String,

@@ -1,4 +1,4 @@
-import { CustomError } from './CustomError.js'
+import { CustomError } from './CustomError'
 
 /**
  * When ta user is not authorized to change a resource

@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../types/ErrorResponse.js'
-import { CustomError } from './CustomError.js'
+import { ErrorResponse } from '../types/ErrorResponse'
+import { CustomError } from './CustomError'
 
 /**
  * A class for when user provides wrong input
