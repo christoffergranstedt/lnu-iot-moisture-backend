@@ -12,12 +12,9 @@ import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplemented
  */
 export const getThings = async (req: Request, res: Response, next: NextFunction) => {
 	const things = await Thing.getThings(req.user.id)
-	res.locals.data = {
-		message: 'All things fetched',
-		things: things
-	}
-	res.status(200)
-	return next()
+
+	res.status(200).json({ message: 'All things fetched', things: things})
+	next()
 }
 
 /**
@@ -30,12 +27,9 @@ export const getThings = async (req: Request, res: Response, next: NextFunction)
 export const getThing = async (req: Request, res: Response, next: NextFunction) => {
 	const { thingId } = req.params
 	const thing = await Thing.getThing(thingId, req.user.id)
-	res.locals.data = {
-		message: 'Thing is fetched',
-		thing: thing
-	}
-	res.status(200)
-	return next()
+
+	res.status(200).json({ message: 'Thing is fetched',	thing: thing})
+	next()
 }
 
 /**

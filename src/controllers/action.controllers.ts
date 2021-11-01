@@ -58,11 +58,8 @@ export const getActions = async (_req: Request, _res: Response, _next: NextFunct
 		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '')
 	}
 
-	res.locals.data = {
-		message: 'The action has been invoked'
-	}
-	res.status(200)
-	return next()
+	res.status(200).json({ message: 'The action has been invoked' })
+	next()
 }
 
 /**
