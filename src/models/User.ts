@@ -39,7 +39,7 @@ interface UserDoc extends mongoose.Document {
 // An interface that describes the properties
 // that a User Model has
 interface UserModel extends mongoose.Model<UserDoc> {
-  build(userInput: UserInput): Promise<UserOutput>
+  build(username: string, password: string): Promise<UserOutput>
 	adminBuild(userInput: UserInput) : Promise<UserOutput>
 	authenticate(userInput: UserInput) : Promise<UserOutput>
 	authenticateRefreshToken(refreshTokenAttributes: RefreshTokenAuth) : Promise<UserOutput>
@@ -83,11 +83,11 @@ const userSchema = new mongoose.Schema(
  *
  * @param {string} userInput - User attributes
  */
- userSchema.statics.build = async (userInput: UserInput) : Promise<UserOutput> => {
-	const userExist = await User.exists({ username: userInput.username })
+ userSchema.statics.build = async (username: string, password: string) : Promise<UserOutput> => {
+	const userExist = await User.exists({ username: username })
 	if (userExist) throw new UsernameIsTakenError()
-	userInput.password = await bcrypt.hash(userInput.password, 10)
-	const user = new User(userInput)
+	password = await bcrypt.hash(password, 10)
+	const user = new User({ username, password })
 	user.save()
 
 	return {

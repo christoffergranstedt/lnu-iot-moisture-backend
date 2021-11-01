@@ -2,6 +2,7 @@ import { Request, Response, NextFunction  } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { UnauthenticatedError } from '../errors/index'
+import { TokenPayload } from '../types/TokenPayload'
 
 /**
  * Verifies if user provided a correct access token in authorization header
@@ -21,7 +22,8 @@ export const verifyAccessToken = async (req: Request, _res: Response, next: Next
 
 		if (authType !== 'Bearer' || !authToken) return next(new UnauthenticatedError())
 
-		const tokenPayload = jwt.verify(authToken, ACCESS_TOKEN_SECRET)
+		const tokenPayload = <TokenPayload>jwt.verify(authToken, ACCESS_TOKEN_SECRET)
+
 		req.user = {
 			id: tokenPayload.userId,
 			username: tokenPayload.username

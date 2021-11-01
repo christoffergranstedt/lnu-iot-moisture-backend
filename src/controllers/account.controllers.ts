@@ -5,6 +5,7 @@ import cryptoRandomString from 'crypto-random-string'
 import { User } from '../models/User'
 import { UnauthenticatedError } from '../errors/index'
 import { notifyUserByTelegram } from '../config/telegram'
+import { TokenPayload } from '../types/TokenPayload'
 
 /**
  * Authenticate a user by checking if the provided username and password exist in database and returns an access token and a refresh token
@@ -36,7 +37,7 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 
 	await User.storeRefreshToken({ userId: user.id, refreshToken })
 
-	res.locals.data = {
+	res.status(200).json({ 		
 		message: 'You are now authenticated',
 		user: {
 			userId: user.id,
@@ -46,9 +47,8 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 			refreshToken: refreshToken,
 			telegramId: user.telegramId
 		}
-	}
-	res.status(200)
-	return next()
+	})
+	next()
 }
 
 /**
@@ -62,11 +62,8 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
  export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
 	const { username, password } = req.body
 	await User.build(username, password)
-	res.locals.data = {
-		message: `Welcome to Smart Home ${username}. Please login via link below with your username and password before able to access more endpoints`
-	}
-	res.status(201)
-	return next()
+	res.status(201).json({message: `Welcome to Smart Home ${username}. Please login via link below with your username and password before able to access more endpoints`})
+	next()
 }
 
 /**
@@ -85,7 +82,7 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 	const refreshToken = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null
 	if (authType !== 'Bearer' || !refreshToken) return next(new UnauthenticatedError())
 
-	const tokenPayload = jwt.verify(refreshToken, ACCESS_TOKEN_SECRET)
+	const tokenPayload = <TokenPayload>jwt.verify(refreshToken, ACCESS_TOKEN_SECRET)
 	req.user = {
 		id: tokenPayload.userId,
 		username: tokenPayload.username
@@ -108,7 +105,7 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 
 	User.storeRefreshToken({ userId: user.id, refreshToken: newRefreshToken })
 
-	res.locals.data = {
+	res.status(200).json({ 		
 		message: 'You have now refreshed your access token and refresh token',
 		user: {
 			userId: user.id,
@@ -118,10 +115,8 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 			refreshToken: refreshToken,
 			telegramId: user.telegramId
 		}
-	}
-
-	res.status(200)
-	return next()
+	})
+	next()
 }
 
 /**
@@ -135,11 +130,8 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
  export const signoutUser = async (req: Request, res: Response, next: NextFunction) => {
 	if (!req.user) return next()
 	await User.storeRefreshToken({ userId: req.user.id, refreshToken: '' })
-	res.locals.data = {
-		message: 'Successfully signed out user'
-	}
-	res.status(200)
-	return next()
+	res.status(200).json({ message: 'Successfully signed out user' })
+	next()
 }
 
 /**
@@ -153,15 +145,13 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
  export const telegramSetup = async (req: Request, res: Response, next: NextFunction) => {
 	const telegramId = req.body.message.chat.id
 	const userId = req.body.message.text
-	try {
-		await User.addTelegramId(userId, telegramId)
-
-		await notifyUserByTelegram({ telegramId: telegramId }, 'You have succesfully authenticated your telegram id with your user account')
-		res.status(200)
-		return next()
-	} catch (error) {
-		await notifyUserByTelegram({ telegramId: telegramId }, 'Your user id could not be found, please try again. Type your userid without quotation marks')
-		res.status(200)
-		return next()
+	const user = await User.addTelegramId(userId, telegramId)
+	if (user && user.telegramId) {
+		await notifyUserByTelegram(user.telegramId, 'You have succesfully authenticated your telegram id with your user account')
+		res.status(200).json({ message: 'You have succesfully authenticated your telegram id with your user account' })
+	} else {
+		await notifyUserByTelegram(telegramId, 'Your user id could not be found, please try again. Type your userid without quotation marks')
+		res.status(400)
 	}
+	next()
 }
