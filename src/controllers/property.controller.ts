@@ -34,12 +34,11 @@ export const getProperty = async (_req: Request, _res: Response, _next: NextFunc
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getPropertyValues = async (req: Request, res: Response, next: NextFunction) => {
+export const getPropertyValues = async (req: Request, res: Response) => {
 	const { propertyName, thingId } = req.params
 	const values = await Thing.getPropertyValues(thingId, propertyName)
 
-	res.status(200).json({message: 'Values for the property, there may be more values, see pagination',	values: values})
-	next()
+	return res.status(200).json({message: 'Values for the property, there may be more values, see pagination',	values: values})
 }
 
 /**
