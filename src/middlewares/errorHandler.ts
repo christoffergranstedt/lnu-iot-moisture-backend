@@ -3,7 +3,6 @@ import { ErrorRequestHandler, Request, Response, NextFunction } from "express"
 import { CustomError } from '../errors/CustomError'
 
 export const errorHandler: ErrorRequestHandler  = (err: Error, _req: Request, res: Response, next: NextFunction) => {
-
 	if (err instanceof CustomError) {
 		return res.status(err.getStatusCode()).send({ errors: err.getErrors() })
 	}

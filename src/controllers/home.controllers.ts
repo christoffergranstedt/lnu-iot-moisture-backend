@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction  } from 'express'
+import { Request, Response } from 'express'
 
 /**
  * Home of the REST API. Return just information about the API.
@@ -8,7 +8,6 @@ import { Request, Response, NextFunction  } from 'express'
  * @param {Function} next - Express next middleware function.
  * @returns {object} - Information about the REST API
  */
-export const startEndpoint = async (_req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Welcome to the REST API for Smart Home' })
-	next()
+export const startEndpoint = async (_req: Request, res: Response) => {
+	return res.status(200).json({ message: 'Welcome to the REST API for Smart Home' })
 }

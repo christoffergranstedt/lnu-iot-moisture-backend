@@ -46,11 +46,10 @@ export const createEvent = async (_req: Request, _res: Response, _next: NextFunc
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const subscribeEvent = async (req: Request, res: Response, next: NextFunction) => {
+export const subscribeEvent = async (req: Request, res: Response) => {
 	const { eventName, thingId } = req.params
 	await Thing.subscribeToEvent(req.user.id, thingId, eventName)
-	res.status(200).json({ message: 'You have now subscribed to the event' })
-	next()
+	return res.status(200).json({ message: 'You have now subscribed to the event' })
 }
 
 /**
@@ -61,12 +60,11 @@ export const subscribeEvent = async (req: Request, res: Response, next: NextFunc
  * @param {Function} next - Express next middleware function.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
- export const unSubscribeEvent = async (req: Request, res: Response, next: NextFunction) => {
+ export const unSubscribeEvent = async (req: Request, res: Response) => {
 	const { eventName, thingId } = req.params
 	await Thing.unSubscribeToEvent(req.user.id, thingId, eventName)
 
-	res.status(200).json({ message: 'You have now unsubscribed to the event' })
-	next()
+	return res.status(200).json({ message: 'You have now unsubscribed to the event' })
 }
 
 /**

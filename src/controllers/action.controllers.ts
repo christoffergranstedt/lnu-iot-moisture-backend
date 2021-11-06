@@ -49,7 +49,7 @@ export const getActions = async (_req: Request, _res: Response, _next: NextFunct
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
- export const invokeAction = async (req: Request, res: Response, next: NextFunction) => {
+ export const invokeAction = async (req: Request, res: Response) => {
 	const { actionName, thingId } = req.params
 
 	const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
@@ -58,8 +58,7 @@ export const getActions = async (_req: Request, _res: Response, _next: NextFunct
 		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '')
 	}
 
-	res.status(200).json({ message: 'The action has been invoked' })
-	next()
+	return res.status(200).json({ message: 'The action has been invoked' })
 }
 
 /**

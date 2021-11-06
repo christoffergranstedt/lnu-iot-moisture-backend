@@ -10,11 +10,10 @@ import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplemented
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getThings = async (req: Request, res: Response, next: NextFunction) => {
+export const getThings = async (req: Request, res: Response) => {
 	const things = await Thing.getThings(req.user.id)
 
-	res.status(200).json({ message: 'All things fetched', things: things})
-	next()
+	return res.status(200).json({ message: 'All things fetched', things: things})
 }
 
 /**
@@ -24,12 +23,11 @@ export const getThings = async (req: Request, res: Response, next: NextFunction)
  * @param {object} res - Express response object.
  * @param {Function} next - Express next middleware function.
  */
-export const getThing = async (req: Request, res: Response, next: NextFunction) => {
+export const getThing = async (req: Request, res: Response) => {
 	const { thingId } = req.params
 	const thing = await Thing.getThing(thingId, req.user.id)
 
-	res.status(200).json({ message: 'Thing is fetched',	thing: thing})
-	next()
+	return res.status(200).json({ message: 'Thing is fetched',	thing: thing})
 }
 
 /**
