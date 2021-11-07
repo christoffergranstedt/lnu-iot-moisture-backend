@@ -2,7 +2,7 @@
   "@context": "https://www.w3.org/2019/wot/td/v1",
   "title": "Lopy4 - Moisture Thing",
   "id": "74242ee9-7657-40fa-8019-1d258cf0ae01",
-  "base": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01",
+  "base": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01",
   "description": "A thing that meisure the moisture in plants",
   "securityDefinitions": {
     "bearer_sc": {
@@ -22,7 +22,7 @@
           "op": [
             "readproperty"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/properties/moisture",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/properties/moisture",
 					"methodName": "GET",
 					"contentType": "application/json"
         }
@@ -35,7 +35,7 @@
       "forms": [
         {
           "op": ["invokeaction"],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/actions/get-current-moisture-value",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/actions/get-current-moisture-value",
 					"methodName": "POST",
 					"contentType": "application/json"
         }
@@ -50,7 +50,7 @@
           "op": [
             "subscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/current-moisture-value/subscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/current-moisture-value/subscribe",
 					"methodName": "POST",
 					"contentType": "application/json"
         },
@@ -58,7 +58,7 @@
           "op": [
             "unsubscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/current-moisture-value/unsubscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/current-moisture-value/unsubscribe",
 					"methodName": "DELETE",
 					"contentType": "application/json"
         }
@@ -66,13 +66,13 @@
     },
     "high-moisture": {
       "title": "high-moisture",
-			"alertValue": "90",
+			"alertValue": "80",
       "forms": [
         {
           "op": [
             "subscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/high-moisture/subscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/high-moisture/subscribe",
 					"methodName": "POST",
 					"contentType": "application/json"
         },
@@ -80,7 +80,7 @@
           "op": [
             "unsubscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/high-moisture/unsubscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/high-moisture/unsubscribe",
 					"methodName": "DELETE",
 					"contentType": "application/json"
         }
@@ -88,13 +88,13 @@
     },
     "low-moisture": {
       "title": "low-moisture",
-			"alertValue": "10",
+			"alertValue": "40",
       "forms": [
         {
           "op": [
             "subscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/low-moisture/subscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/low-moisture/subscribe",
 					"methodName": "POST",
 					"contentType": "application/json"
         },
@@ -102,7 +102,7 @@
           "op": [
             "unsubscribeevent"
           ],
-          "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/low-moisture/unsubscribe",
+          "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/events/low-moisture/unsubscribe",
 					"methodName": "DELETE",
 					"contentType": "application/json"
         }
@@ -114,7 +114,7 @@
       "op": [
         "readallproperties"
       ],
-      "href": "https://cg222sp-1dv527-assignment-3.herokuapp.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/properties",
+      "href": "https://iotmoisture.christoffergranstedt.com/api/things/74242ee9-7657-40fa-8019-1d258cf0ae01/properties",
 			"methodName": "GET",
 			"contentType": "application/json"
     }
