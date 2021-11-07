@@ -66,7 +66,7 @@
     },
     "high-moisture": {
       "title": "high-moisture",
-			"alertValue": "90",
+			"alertValue": "80",
       "forms": [
         {
           "op": [
@@ -88,7 +88,7 @@
     },
     "low-moisture": {
       "title": "low-moisture",
-			"alertValue": "10",
+			"alertValue": "40",
       "forms": [
         {
           "op": [
