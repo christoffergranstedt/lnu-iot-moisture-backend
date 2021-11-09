@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction  } from 'express'
 
 import { Actions } from '../constants/Actions'
-import { Publisher } from '../config/mqtt/Publisher'
-import { GetCurrentMoisturePublisher } from '../actions/publishers/GetCurrentMoisturePublisher'
-import { AppGlobal } from '../constants/AppGlobal'
+// import { Publisher } from '../config/mqtt/Publisher'
+// import { GetCurrentMoisturePublisher } from '../actions/publishers/GetCurrentMoisturePublisher'
+// import { AppGlobal } from '../constants/AppGlobal'
 import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError'
 import { Thing } from '../models/Thing'
 import { Events } from '../constants/Events'
@@ -56,9 +56,11 @@ export const getActions = async (_req: Request, _res: Response, _next: NextFunct
 	const { actionName, thingId } = req.params
 
 	if (actionName === Actions.GetCurrentMoistureValue) {
-		const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
-		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '')
+		// This is commented since whe dont have a mqtt client and no thing is active
+		/* const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
+		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '') */
 
+		// Lines below send a random mositure value since there is not thing active that have the real value
 		const valueInProcent = Math.floor(Math.random() * (90 - 20 + 1)) + 20; // Random number between 20 and 90
 		const users = await Thing.getEventSubscribers(thingId, Events.CurrentMoistureValue)
 		const event = `Current moisture level in thing, ${thingId}, is: ${valueInProcent.toFixed(2)}%`
