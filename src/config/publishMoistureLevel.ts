@@ -14,7 +14,7 @@ const publishRandomValue = async () => {
   const thing = await Thing.getThing(thingId)
   if (!thing) throw new NoResourceIdError(thingId)
 
-  const valueInProcent = Math.floor(Math.random() * 90) + 20 // Random number between 20 and 90
+  const valueInProcent = Math.floor(Math.random() * (90 - 20 + 1)) + 20; // Random number between 20 and 90
   await Thing.addPropertyValue(thingId, PROPERTY.Moisture, valueInProcent)
 
   const lowAlertValue = await Thing.getAlertValue(thingId, Events.LowMoisture)
