@@ -5,6 +5,9 @@ import { Publisher } from '../config/mqtt/Publisher'
 import { GetCurrentMoisturePublisher } from '../actions/publishers/GetCurrentMoisturePublisher'
 import { AppGlobal } from '../constants/AppGlobal'
 import { EndpointNotImplementedYetError } from '../errors/EndpointNotImplementedYetError'
+import { Thing } from '../models/Thing'
+import { Events } from '../constants/Events'
+import { notifyUserByTelegram } from '../config/telegram'
 
 /**
  * To get info about all actions for a thing
@@ -52,10 +55,17 @@ export const getActions = async (_req: Request, _res: Response, _next: NextFunct
  export const invokeAction = async (req: Request, res: Response) => {
 	const { actionName, thingId } = req.params
 
-	const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
-
 	if (actionName === Actions.GetCurrentMoistureValue) {
+		const getCurrentMoisturePublisher = new GetCurrentMoisturePublisher(req.app.get(AppGlobal.MqttClient))
 		getCurrentMoisturePublisher.publish(Publisher.getCurrentMoistureValue(thingId), '')
+
+		const valueInProcent = Math.floor(Math.random() * (90 - 20 + 1)) + 20; // Random number between 20 and 90
+		const users = await Thing.getEventSubscribers(thingId, Events.CurrentMoistureValue)
+		const event = `Current moisture level in thing, ${thingId}, is: ${valueInProcent.toFixed(2)}%`
+		for (let i = 0; i < users.length; i++) {
+			const telegramId = (users[i].telegramId) as string
+			if (users[i].telegramId) await notifyUserByTelegram(telegramId, event)
+		}
 	}
 
 	return res.status(200).json({ message: 'The action has been invoked' })
