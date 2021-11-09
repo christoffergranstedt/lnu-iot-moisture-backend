@@ -12,8 +12,8 @@ export const publishMoistureLevelLoop = cron.schedule('0 0 */3 * * *', () =>  {
 })
 
 const publishRandomValue = async () => {
-  const thingId = '617fd39fba8f5e8272be8e51'
-  const thing = await Thing.getThing(thingId)
+  const thingId = '74242ee9-7657-40fa-8019-1d258cf0ae01'
+  const thing = await Thing.findOne({ id: thingId })
   if (!thing) throw new NoResourceIdError(thingId)
 
   const valueInProcent = Math.floor(Math.random() * (90 - 20 + 1)) + 20; // Random number between 20 and 90
