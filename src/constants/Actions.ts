@@ -1,3 +1,3 @@
 export enum Actions {
-  GetCurrentMoistureValue = 'get-current-moisture-value'
+  GetCurrentMoistureValue = 'current-moisture-value'
 }
