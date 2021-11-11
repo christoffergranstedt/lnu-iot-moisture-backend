@@ -288,7 +288,7 @@ thingSchema.statics.getThing = async (thingId: string, userId?: string): Promise
  * @param {string} value - The value
  */
 thingSchema.statics.addPropertyValue = async (thingId: string, property: string, value: number): Promise<void> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const propertyData = thing.properties.find(prop => prop.title === property)
@@ -306,7 +306,7 @@ thingSchema.statics.addPropertyValue = async (thingId: string, property: string,
  */
 thingSchema.statics.getPropertyValues = async (thingId: string, property: string): Promise<PropertyReturn[]> => {
 	const numberOfValuesReturned = 100 // Quick fix, this should of course be a pagination
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const propertyData = thing.properties.find(prop => prop.title === property)
@@ -326,7 +326,7 @@ thingSchema.statics.getPropertyValues = async (thingId: string, property: string
  * @param {string} eventName - The name of the event
  */
 thingSchema.statics.subscribeToEvent = async (userId: string, thingId: string, eventName: string): Promise<void> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const eventData = thing.events.find(event => event.title === eventName)
@@ -346,7 +346,7 @@ thingSchema.statics.subscribeToEvent = async (userId: string, thingId: string, e
  * @param {string} eventName - The name of the event
  */
 thingSchema.statics.unSubscribeToEvent = async (userId: string, thingId: string, eventName: string): Promise<void> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const eventData = thing.events.find(event => event.title === eventName)
@@ -366,7 +366,7 @@ thingSchema.statics.unSubscribeToEvent = async (userId: string, thingId: string,
  * @param {string} eventName - The name of the event
  */
 thingSchema.statics.getEventSubscribers = async (thingId: string, eventName: string): Promise<UserOutput[]> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const eventData = thing.events.find(event => event.title === eventName)
@@ -388,7 +388,7 @@ thingSchema.statics.getEventSubscribers = async (thingId: string, eventName: str
  * @param {string} eventName - The name of the event
  */
 thingSchema.statics.getAlertValue = async (thingId: string, eventName: string): Promise<number> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const eventData = thing.events.find(event => event.title === eventName)
