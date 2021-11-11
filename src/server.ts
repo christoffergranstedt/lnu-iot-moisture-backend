@@ -38,7 +38,7 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 })
 
 // Different routes
-app.use('/api', routes)
+app.use('/', routes)
 
 // Handle all request methods and routes that are not supported and return a NotFoundError
 app.all('*', async (_req: Request, _res: Response, next: NextFunction) => {
