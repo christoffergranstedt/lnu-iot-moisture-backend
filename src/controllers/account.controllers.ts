@@ -7,7 +7,6 @@ import { UnauthenticatedError } from '../errors/index'
 import { notifyUserByTelegram } from '../config/telegram'
 import { TokenPayload } from '../types/TokenPayload'
 import { NoUserFound } from '../errors/NoUserFound'
-import { NotPossibleToAuthTelegramError } from '../errors/NotPossibleToAuthTelegramError'
 
 /**
  * Authenticate a user by checking if the provided username and password exist in database and returns an access token and a refresh token
@@ -151,10 +150,10 @@ export const authenticateUser = async (req: Request, res: Response) => {
 			return res.status(200).json({ message: 'You have succesfully authenticated your telegram id with your user account' })
 		}
 		await notifyUserByTelegram(telegramId, 'Your user id could not be found, please try again. Type your userid without quotation marks')
-		throw new NotPossibleToAuthTelegramError()
+		return res.status(200) // 200 since Telegram otherwise try to send webhook again
 	} catch (error) {
 		await notifyUserByTelegram(telegramId, 'Your user id could not be found, please try again. Type your userid without quotation marks')
-		throw new NotPossibleToAuthTelegramError() 
+		return res.status(200) // 200 since Telegram otherwise try to send webhook again
 	}
 
 }
