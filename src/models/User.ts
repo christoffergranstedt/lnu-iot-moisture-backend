@@ -93,6 +93,7 @@ const userSchema = new mongoose.Schema(
 	return {
 		id: user._id,
 		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
@@ -110,7 +111,8 @@ const userSchema = new mongoose.Schema(
 
 	return {
 		id: user._id,
-		username: user.username
+		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
@@ -127,7 +129,8 @@ const userSchema = new mongoose.Schema(
 
 	return {
 		id: user._id,
-		username: user.username
+		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
@@ -142,7 +145,8 @@ const userSchema = new mongoose.Schema(
 
 	return {
 		id: user._id,
-		username: user.username
+		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
@@ -161,6 +165,7 @@ const userSchema = new mongoose.Schema(
 	return {
 		id: user._id,
 		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
@@ -175,7 +180,8 @@ const userSchema = new mongoose.Schema(
 
 	return {
 		id: user._id,
-		username: user.username
+		username: user.username,
+		telegramId: user.telegramId
 	}
 }
 
