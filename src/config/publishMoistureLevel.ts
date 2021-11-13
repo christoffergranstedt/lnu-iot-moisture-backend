@@ -12,7 +12,7 @@ export const publishMoistureLevelLoop = cron.schedule('0 0 */3 * * *', () =>  {
 })
 
 const publishRandomValue = async () => {
-  const thingId = '618adb29b828498546ded864'
+  const thingId = '74242ee9-7657-40fa-8019-1d258cf0ae01'
   const thing = await Thing.getThing(thingId)
   if (!thing) throw new NoResourceIdError(thingId)
 

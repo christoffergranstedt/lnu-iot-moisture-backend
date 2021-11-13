@@ -174,7 +174,7 @@ const thingSchema = new mongoose.Schema(
  * @param {object} thingInput - An object about the thing
  */
 thingSchema.statics.build = async (thingInput: ThingInput): Promise<ThingOutput> => {
-	const thingExist = await Thing.exists({ thingId: thingInput.id })
+	const thingExist = await Thing.exists({ id: thingInput.id })
 	if (thingExist) throw new NotUniqueError('Thing')
 
 	const thing = new Thing(thingInput)
@@ -182,7 +182,7 @@ thingSchema.statics.build = async (thingInput: ThingInput): Promise<ThingOutput>
 
 	return {
 		title: thing.title,
-		id: thing._id,
+		id: thing.id,
 		base: thing.base,
 		description: thing.description,
 		securityDefinitions: {
@@ -225,7 +225,7 @@ thingSchema.statics.getThings = async (userId: string): Promise<ThingOutput[]> =
 
 		return {
 			title: thing.title,
-			id: thing._id,
+			id: thing.id,
 			base: thing.base,
 			description: thing.description,
 			securityDefinitions: {
@@ -251,7 +251,7 @@ thingSchema.statics.getThings = async (userId: string): Promise<ThingOutput[]> =
  * @param {string} thingId - Thing id for a specific thing
  */
 thingSchema.statics.getThing = async (thingId: string, userId?: string): Promise<ThingOutput> => {
-	const thing = await Thing.findById(thingId)
+	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
 	const eventSubscriptions: EventReturn[] = thing.events.map(event => {
@@ -264,7 +264,7 @@ thingSchema.statics.getThing = async (thingId: string, userId?: string): Promise
 	})
 	return {
 		title: thing.title,
-		id: thing._id,
+		id: thing.id,
 		base: thing.base,
 		description: thing.description,
 		securityDefinitions: {
@@ -305,7 +305,7 @@ thingSchema.statics.addPropertyValue = async (thingId: string, property: string,
  * @param {string} property - The property
  */
 thingSchema.statics.getPropertyValues = async (thingId: string, property: string): Promise<PropertyReturn[]> => {
-	const numberOfValuesReturned = 100 // Quick fix, this should of course be a pagination
+	const numberOfValuesReturned = 56 // Quick fix, this should of course be a pagination
 	const thing = await Thing.findOne({ id: thingId })
 	if (!thing) throw new NoResourceIdError(thingId)
 
