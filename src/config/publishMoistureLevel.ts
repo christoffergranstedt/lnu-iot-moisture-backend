@@ -7,7 +7,7 @@ import { notifyUserByTelegram } from './telegram'
 
 // this is a cron job that will run every three hours and generate a random value.
 // This is only since the thing is not active right now
-export const publishMoistureLevelLoop = cron.schedule('0 0 */3 * * *', () =>  {
+export const publishMoistureLevelLoop = cron.schedule('0 0 */12 * * *', () =>  {
   publishRandomValue()
 })
 
